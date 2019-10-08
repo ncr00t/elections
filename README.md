@@ -1,5 +1,1 @@
-Заочная Школа разработчика  - весна 2019 
-
-Роман Иванисенко  
-ivanisenko.r.m@gmail.com  
-Саратов/Энгельс, СГТУ, 5 курс
+Server part for the digital voting system
