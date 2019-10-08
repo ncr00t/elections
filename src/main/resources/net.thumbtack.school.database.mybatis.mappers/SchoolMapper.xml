@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.thumbtack.school.database.mybatis.mappers.SchoolMapper">
+    <resultMap id="resultSchool" type="net.thumbtack.school.database.model.School">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="year" column="year"/>
+        <collection property="groups" column="id" javaType="java.util.List" ofType="net.thumbtack.school.database.model.Group">
+            <result property="name" column="groupName"/>
+            <result property="room" column="room"/>
+            <result property="id" column="groupId"/>
+            <collection property="trainees" column="id" javaType="java.util.List" ofType="net.thumbtack.school.database.model.Trainee">
+                <result property="firstName" column="firstName"/>
+                <result property="lastName" column="lastName"/>
+                <result property="rating" column="rating"/>
+                <result property="id" column="traineeId"/>
+            </collection>
+            <collection property="subjects" column="id" javaType="java.util.List" ofType="net.thumbtack.school.database.model.Subject">
+                <result property="name" column="subjectName"/>
+                <result property="id" column="subjectId"/>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="getAllUsingJoin" resultMap="resultSchool">
+        SELECT school.id as id, school.name, school.year,
+        group_.id as groupId, group_.name as groupName, group_.room,
+        t.id as traineeId, t.firstName, t.lastName, t.rating,
+        s.id as subjectId, s.name as subjectName
+        FROM school
+        JOIN group_ ON group_.schoolId = school.id
+        JOIN group_subject gs ON gs.groupId = group_.id
+        JOIN subject s ON s.id = gs.subjectId
+        LEFT JOIN trainee t ON group_.id = t.groupId
+    </select>
+</mapper>
