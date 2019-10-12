@@ -1,6 +1,6 @@
 Server part for the digital voting system
 
-##Description
+#Description
 
 Any voter can at any time receive
 <ul>
